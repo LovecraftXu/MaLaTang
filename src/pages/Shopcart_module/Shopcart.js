@@ -1,11 +1,13 @@
 import React from 'react';
+
 import { Button, Table, Divider, Icon, Modal, } from 'antd';
 import { connect } from 'react-redux';
 
-import OrderForm from './OrderForm';
+import ShopcartForm from './ShopcartForm';
+import '../mlt.css';
 
 import { 
-    reloadOrder,
+    reloadShopcart,
     deleteById,
     showModal,
     closeModal, 
@@ -15,15 +17,14 @@ import {
     deleteByIds,
     clearModal,
 
-} from '../../store/orderReducer'
+} from '../../store/shopcartReducer'
 
 
 
-
-class Order extends React.Component {
+class Shopcart extends React.Component {
 
     componentWillMount(){
-        this.props.dispatch(reloadOrder());
+        this.props.dispatch(reloadShopcart());
     }
 
     //点击添加执行函数
@@ -42,8 +43,7 @@ class Order extends React.Component {
         e.preventDefault();
         this.form.validateFields((err, values) => {
           if (!err) {
-            let time=values.orderDate._d.getTime();
-            this.props.dispatch(saveData({...values,orderDate:time}));
+            this.props.dispatch(saveData(values));
           } 
         });    
     }
@@ -51,7 +51,7 @@ class Order extends React.Component {
     //查看详细信息
     toDetails(record){
         this.props.history.push({
-            pathname:'/orderDetails',
+            pathname:'/shopcartDetails',
             state:record
         });
     }
@@ -102,27 +102,15 @@ class Order extends React.Component {
         this.form = form;
     }
 
-     //时间戳转日期  没有时间默认为1970-01-1 8:0:0
-     timestampToTime(timestamp) {
-        let date = new Date(timestamp);//时间戳为10位需*1000，时间戳为13位的话不需乘1000    
-        let Y = date.getFullYear() + '-';      
-        let M = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1) + '-';      
-        let D = date.getDate() + ' ';     
-        let h = date.getHours() + ':';
-        let m = date.getMinutes() + ':';
-        let s = date.getSeconds();
-         return Y+M+D+h+m+s;
-        }
-
     render(){
-        let { ids, obj, list, visible, loading } = this.props.orderState;
+        let { ids, obj, list, visible, loading } = this.props.shopcartState;
         let { Column } = Table;
         var rowSelection = {
             onChange: (selectedRowKeys, selectedRows) => {
                 this.props.dispatch(getIds(selectedRowKeys));
             },
             getCheckboxProps: record => ({
-                disabled: record.name === 'Disabled Order', // Column configuration not to be checked
+                disabled: record.name === 'Disabled Shopcart', // Column configuration not to be checked
                 name: record.name,
               }),
           };
@@ -134,8 +122,8 @@ class Order extends React.Component {
         }
         // console.log(ids);
         return (
-            <div className="order">
-                <h2>用户管理</h2>
+            <div className="shopcart">
+                <h2>顾客管理</h2>
                 <div className="btns">
                     <Button type="primary" className="btn" onClick={this.toAdd.bind(this)}>添加</Button>
                     <Button type="danger" className="btn" onClick = {this.batchDeleteByIds.bind(this,ids)}>批量下架</Button>
@@ -148,42 +136,35 @@ class Order extends React.Component {
                     onOk={this.handleOk}
                     onCancel={this.handleCancel}
                     >
-                    <OrderForm initData={obj} ref={this.FormRefs} />
+                    <ShopcartForm initData={obj} ref={this.FormRefs} />
                 </Modal>
 
-                <Table rowKey="orderId" 
+                <Table rowKey="shopId" 
                 dataSource={list} 
                 bordered={true} 
                 rowSelection={rowSelection} 
                 size="small" 
                 pagination={pagination} 
                 loading={loading}>
-                    <Column align="center" title="订单状态" dataIndex="orderType" key="orderType" />
-                    <Column align="center" title="订单总价" dataIndex="orderAllprice" key="orderAllprice" />
-                    <Column align="center" title="订单时间" key="orderDate" render={(record) => (
+                    <Column align="center" title="菜品名称" key="shopMenuId" render={(record) => (
                         <span>
-                        {this.timestampToTime(record.orderDate)}
+                        {record.menu.menuName}
                         </span>
                     )} />
-                    <Column align="center" title="桌子位置" key="orderSeatId" render={(record) => (
+                    <Column align="center" title="数量" dataIndex="shopNumber" key="shopNumber" />
+                    <Column align="center" title="点单名" key="shopOrderId" render={(record) => (
                         <span>
-                        {record.seat.seatPosition}
+                        {record.orderForm.orderName}
                         </span>
                     )} />
-                    <Column align="center" title="下单人姓名" key="orderCustId" render={(record) => (
-                        <span>
-                        {record.customer.custRealname}
-                        </span>
-                    )} />
-                    <Column align="center" title="订单名" dataIndex="orderName" key="orderName" />
-
+                    <Column align="center" title="总价格" dataIndex="shopPrice" key="shopPrice" />
                     
                     <Column align="center"
                     title="操作"
                     key="action"
                     render={(text, record) => (
                         <span>
-                        <Icon type="delete" onClick={this.toDelete.bind(this,record.orderId)}></Icon>
+                        <Icon type="delete" onClick={this.toDelete.bind(this,record.custId)}></Icon>
                         <Divider type="vertical" />
                         <Icon type="edit"  onClick = {this.toEdit.bind(this,record)}></Icon>
                         <Divider type="vertical" />
@@ -201,5 +182,4 @@ let mapStateToProps = (state) =>{
     return state;
 }
 
-
-export default connect(mapStateToProps)(Order);
+export default connect(mapStateToProps)(Shopcart);

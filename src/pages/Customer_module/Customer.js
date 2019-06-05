@@ -41,9 +41,12 @@ class Customer extends React.Component {
     //提交
     handleOk = e => {
         e.preventDefault();
+        
         this.form.validateFields((err, values) => {
           if (!err) {
+            e.disabled=true; 
             this.props.dispatch(saveData(values));
+           
           } 
         });    
     }

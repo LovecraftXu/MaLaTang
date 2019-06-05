@@ -2,6 +2,7 @@ import axios from '../http/index';
 import { message } from 'antd';
 
 
+
 let initState = {
     ids:[],
     list:[],
@@ -54,6 +55,7 @@ export function deleteById(id){
 //提交表单
 export function saveData(data){
     return function(dispatch){
+        console.log(data);
         axios.post("/orderform/saveOrUpdate",data).then(({statusText})=>{
             message.success(statusText);
             dispatch(clearModal());
@@ -86,8 +88,6 @@ export function deleteByIds(ids){
         })
     }
 }
-
-
 
 
 function orderReducer(state=initState,action){

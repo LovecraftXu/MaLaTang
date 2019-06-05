@@ -18,6 +18,8 @@ import Menu from './pages/Menu_module/Menu';
 import MenuDetails from './pages/Menu_module/MenuDetails';
 import Order from './pages/Order_module/Order';
 import OrderDetails from './pages/Order_module/OrderDetails';
+import Shopcart from './pages/Shopcart_module/Shopcart';
+import ShopcartDetails from './pages/Shopcart_module/ShopcartDetails';
 
 
 function App() {
@@ -47,6 +49,8 @@ function App() {
               <Route path='/menuDetails' component={MenuDetails} />
               <Route path='/order' component={Order} />
               <Route path='/orderDetails' component={OrderDetails} />
+              <Route path='/shopcart' component={Shopcart} />
+              <Route path='/shopcartDetails' component={ShopcartDetails} />
 
             </Switch>
           </div>

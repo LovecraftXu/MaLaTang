@@ -60,6 +60,18 @@ class Log extends React.Component {
           });
     }
 
+    //时间戳转日期  没有时间默认为1970-01-1 8:0:0
+    timestampToTime(timestamp) {
+        let date = new Date(timestamp);//时间戳为10位需*1000，时间戳为13位的话不需乘1000    
+        let Y = date.getFullYear() + '-';      
+        let M = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1) + '-';      
+        let D = date.getDate() + ' ';     
+        let h = date.getHours() + ':';
+        let m = date.getMinutes() + ':';
+        let s = date.getSeconds();
+         return Y+M+D+h+m+s;
+        }
+
 
     render(){
         let { ids,  list,  loading } = this.props.logState;
@@ -96,7 +108,11 @@ class Log extends React.Component {
                 loading={loading}>
                     <Column align="center" title="执行者" dataIndex="logOp" key="logOp" />
                     <Column align="center" title="事件内容" dataIndex="logEvent" key="logEvent" />
-                    <Column align="center" title="执行时间" dataIndex="logDate" key="logDate" />
+                    <Column align="center" title="执行时间" key="logDate" render={(record) => (
+                        <span>
+                        {this.timestampToTime(record.logDate)}
+                        </span>
+                    )} />
                     
                     <Column align="center"
                     title="操作"

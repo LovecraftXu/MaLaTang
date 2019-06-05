@@ -2,7 +2,6 @@ import axios from '../http/index';
 import { message } from 'antd';
 
 
-
 let initState = {
     ids:[],
     list:[],
@@ -22,7 +21,7 @@ export function endLoading(){
 export function showModal(){
     return {type:"SHOW_MODAL"}
 }
-//结束加载
+//关闭模态框
 export function closeModal(){
     return {type:"CLOSE_MODAL"}
 }
@@ -31,22 +30,12 @@ export function clearModal(){
     return {type:"CLEAR_MODEL"}
 }
 
-//重载信息
-export function reloadSeat(){
+//重载用户信息
+export function reloadShopcart(){
     return function(dispatch){
         dispatch(beginLoading);
-        axios.get("/seat/findAll").then((result)=>{
-            dispatch({type:"RELOAD_SEAT", payload:result.data})         
-        })
-        dispatch(endLoading);
-    }  
-}
-//查没有人的桌子
-export function reloadNoPeopleSeat(){
-    return function(dispatch){
-        dispatch(beginLoading);
-        axios.get("/seat/findByNoPeople").then((result)=>{
-            dispatch({type:"RELOAD_NOPEOPLESEAT", payload:result.data})         
+        axios.get("/shopcart/findAllWithMenuAndOrder").then((result)=>{
+            dispatch({type:"RELOAD_SHOPCART", payload:result.data})         
         })
         dispatch(endLoading);
     }  
@@ -54,22 +43,22 @@ export function reloadNoPeopleSeat(){
 //根据id删除单行信息
 export function deleteById(id){
     return function(dispatch){
-        axios.get("/seat/deleteById",{
+        axios.get("/shopcart/deleteById",{
             params:{id}
         }).then(({statusText})=>{
             message.success(statusText);
-            dispatch(reloadSeat());
+            dispatch(reloadShopcart());
         })
     }   
 }
 //提交表单
 export function saveData(data){
     return function(dispatch){
-        axios.post("/seat/saveOrUpdate",data).then(({statusText})=>{
+        axios.post("/shopcart/saveOrUpdate",data).then(({statusText})=>{
             message.success(statusText);
             dispatch(clearModal());
             dispatch(closeModal());
-            dispatch(reloadSeat());
+            dispatch(reloadShopcart());
         })  
     }
 }
@@ -80,7 +69,6 @@ export function editData(record){
 
 //接收要删除的ids
 export function getIds(ids){
-    // console.log(ids)
     return {type:"GET_IDS", payload:ids}
 }
 //批量删除
@@ -91,35 +79,21 @@ export function deleteByIds(ids){
             arr+="ids="+ids[id]+'&';
         }
         let arrNew = arr.substring(0,arr.length-1);
-        axios.post("/seat/deleteBatchByIds?"+arrNew).then(({statusText})=>{
+        console.log(arrNew);
+        axios.post("/shopcart/deleteBatchByIds?"+arrNew).then(({statusText})=>{
             message.success(statusText);
-            dispatch(reloadSeat());
+            dispatch(reloadShopcart());
         })
     }
 }
-//退桌
-export function exitSeat(id){
-    return function(dispatch){
-        axios.get("/seat/exitSeat",{
-            params:{id}
-        }).then(({statusText})=>{
-            message.success(statusText);
-            dispatch(reloadSeat());
-        })
-    }   
-}
 
 
 
-function seatReducer(state=initState,action){
+
+function ShopcartReducer(state=initState,action){
 	switch(action.type){
-		case "RELOAD_SEAT":
+		case "RELOAD_SHOPCART":
 			return {
-                ...state,
-                list:action.payload
-            };
-        case "RELOAD_NOPEOPLESEAT":
-            return {
                 ...state,
                 list:action.payload
             };
@@ -150,18 +124,19 @@ function seatReducer(state=initState,action){
             }; 
         case "GET_IDS":
             return {
+                
                 ...state,
                 ids:action.payload
-            }; 
+            };
         case "CLEAR_MODEL":
             return {
                 ...state,
                 obj:{}
-            };    
+            };           
         
         default:
 		return state;
 	}
 }
 
-export default seatReducer;
+export default ShopcartReducer;

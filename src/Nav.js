@@ -87,7 +87,7 @@ class Nav extends React.Component {
               </span>
             }
           >            
-            <Menu.Item key="4"><Link to='/shopCart' className="link">购物车管理</Link></Menu.Item>
+            <Menu.Item key="4"><Link to='/Shopcart' className="link">购物车管理</Link></Menu.Item>
             <Menu.Item key="5"><Link to='/order' className="link">订单管理</Link></Menu.Item>   
           </SubMenu>
           

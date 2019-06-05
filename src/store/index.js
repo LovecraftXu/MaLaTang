@@ -9,6 +9,7 @@ import customerReducer from './customerReducer';
 import seatReducer from './seatReducer';
 import menuReducer from './menuReducer';
 import orderReducer from './orderReducer';
+import shopcartReducer  from './shopcartReducer';
 
 
 
@@ -21,7 +22,7 @@ let rootReducer = combineReducers({
 	seatState:seatReducer,
 	menuState:menuReducer,
 	orderState:orderReducer,
-
+	shopcartState:shopcartReducer,
 })
 //创建仓库
 export default createStore(rootReducer,applyMiddleware(thunk));

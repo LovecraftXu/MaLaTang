@@ -1,4 +1,4 @@
-import { Form, Input, Select } from 'antd';
+import { Form,  Select,  DatePicker } from 'antd';
 import {connect} from 'react-redux'
 import React from 'react';
 
@@ -7,29 +7,31 @@ import {
 } from '../../store/customerReducer';
 
 import {
-  reloadSeat,
+  reloadNoPeopleSeat,
 } from '../../store/seatReducer'
 const {Option} = Select;
 
 class OrderForm extends React.Component {
   
   componentWillMount(){
-   
-
     this.props.dispatch(reloadCustomer());
-    this.props.dispatch(reloadSeat());
+    this.props.dispatch(reloadNoPeopleSeat());
   }
 
   render() {
 
+    const config = {
+      rules: [{ type: 'object', required: true, message: 'Please select time!' }],
+    };
+
     const { getFieldDecorator } = this.props.form;
-    let { cList } = this.props.customerState;
-    let { sList } = this.props.seatState;
+    let { list:cList } = this.props.customerState;
+    let { list:sList } = this.props.seatState;
     getFieldDecorator("orderId");
     getFieldDecorator("orderAllprice");
     getFieldDecorator("orderName");
     return (
-        <div  className="user_form">
+        <div  className="order_form">
         
         <Form className="form">
         <Form.Item label="订单状态">
@@ -44,9 +46,9 @@ class OrderForm extends React.Component {
         </Form.Item>
         
         <Form.Item label="订单日期">
-          {getFieldDecorator("orderDate" , {
-            rules: [{ required: true, message: 'Please input orderDate!' }],
-          })( <Input placeholder="OrderDate" /> )}
+        {getFieldDecorator('orderDate', config)(
+            <DatePicker showTime format="YYYY-MM-DD HH:mm:ss" />,
+          )}
         </Form.Item>
 
         <Form.Item label="桌子位置">
@@ -61,7 +63,7 @@ class OrderForm extends React.Component {
        </Select> )}
         </Form.Item>
         <Form.Item label="下单人姓名">
-          {getFieldDecorator('custId', {
+          {getFieldDecorator('orderCustId', {
             rules: [{ required: true, message: 'Please select name!' }],
           })( <Select placeholder="Select a option and change input text above" >
                 {
@@ -81,8 +83,12 @@ class OrderForm extends React.Component {
 const mapPropsToFields = (props) => {
     let obj = {};
     for(let key in props.initData){
+      if(key === "orderDate"){
+        obj[key] = Form.createFormField({value: null })
+      } else {
         let val = props.initData[key]; 
         obj[key] = Form.createFormField({value: val})
+      }
     }
     return obj;
 }
