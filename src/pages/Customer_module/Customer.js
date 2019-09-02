@@ -1,3 +1,10 @@
+/*
+ * @Description: In User Settings Edit
+ * @Author: your name
+ * @Date: 2019-05-30 17:00:38
+ * @LastEditTime: 2019-09-02 13:21:55
+ * @LastEditors: Please set LastEditors
+ */
 import React from 'react';
 
 import { Button, Table, Divider, Icon, Modal, } from 'antd';
@@ -25,6 +32,7 @@ class Customer extends React.Component {
 
     componentWillMount(){
         this.props.dispatch(reloadCustomer());
+        
     }
 
     //点击添加执行函数
@@ -106,7 +114,7 @@ class Customer extends React.Component {
     }
 
     render(){
-        let { ids, obj, list, visible, loading } = this.props.customerState;
+        let { ids, obj, list, visible, loading, title } = this.props.customerState;
         let { Column } = Table;
         var rowSelection = {
             onChange: (selectedRowKeys, selectedRows) => {
@@ -121,20 +129,19 @@ class Customer extends React.Component {
         let pagination = {
             position:'bottom',
             pageSize:5,
-            
         }
         // console.log(ids);
         return (
             <div className="customer">
                 <h2>顾客管理</h2>
                 <div className="btns">
-                    <Button type="primary" className="btn" onClick={this.toAdd.bind(this)}>添加</Button>
-                    <Button type="danger" className="btn" onClick = {this.batchDeleteByIds.bind(this,ids)}>批量下架</Button>
+                    <Button type="primary" className="btn" onClick={this.toAdd.bind(this)}>添加顾客</Button>
+                    <Button type="danger" className="btn" onClick = {this.batchDeleteByIds.bind(this,ids)}>批量删除</Button>
                 </div>
                 
                {/* 模态框 */}
                <Modal
-                    title="添加"
+                    title={title}
                     visible={visible}
                     onOk={this.handleOk}
                     onCancel={this.handleCancel}

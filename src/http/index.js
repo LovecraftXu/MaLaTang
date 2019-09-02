@@ -2,8 +2,8 @@ import axios from 'axios'
 import qs from 'qs'
 import {message} from 'antd'
 
-axios.defaults.baseURL = 'http://127.0.0.1:10000';
-// axios.defaults.baseURL = 'http://wangdoudou.cn:10000';
+// axios.defaults.baseURL = 'http://127.0.0.1:10000';
+axios.defaults.baseURL = 'http://wangdoudou.cn:10000';
 //axios.defaults.headers.common['Authorization'] = AUTH_TOKEN;
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 // axios.defaults.transformRequest = [function(data){

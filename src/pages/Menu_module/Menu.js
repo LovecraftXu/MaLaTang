@@ -1,6 +1,13 @@
+/*
+ * @Description: In User Settings Edit
+ * @Author: your name
+ * @Date: 2019-05-30 19:54:44
+ * @LastEditTime: 2019-09-02 13:31:01
+ * @LastEditors: Please set LastEditors
+ */
 import React from 'react';
 
-import { Button, Table, Divider, Icon, Modal, } from 'antd';
+import { Button, Table, Divider, Icon, Modal} from 'antd';
 import { connect } from 'react-redux';
 
 import MenuForm from './MenuForm';
@@ -135,7 +142,7 @@ class Menu extends React.Component {
     }
 
     render(){
-        let { ids, obj, list, visible, loading, visible2, obj2 } = this.props.menuState;
+        let { ids, obj, list, visible, loading, visible2, obj2, title } = this.props.menuState;
         let { Column } = Table;
         var rowSelection = {
             onChange: (selectedRowKeys, selectedRows) => {
@@ -153,17 +160,18 @@ class Menu extends React.Component {
             
         }
         // console.log(ids);
+
         return (
             <div className="menu">
-                <h2>顾客管理</h2>
+                <h2>菜单管理</h2>
                 <div className="btns">
-                    <Button type="primary" className="btn" onClick={this.toAdd.bind(this)}>添加</Button>
+                    <Button type="primary" className="btn" onClick={this.toAdd.bind(this)}>添加菜品</Button>
                     <Button type="danger" className="btn" onClick = {this.batchDeleteByIds.bind(this,ids)}>批量下架</Button>
                 </div>
                 
                {/* 模态框 */}
                <Modal
-                    title="添加"
+                    title={title}
                     visible={visible}
                     onOk={this.handleOk}
                     onCancel={this.handleCancel}
@@ -178,7 +186,7 @@ class Menu extends React.Component {
                     onCancel={this.handleCancel2}
                     >
                     <MenuSumForm initData={obj2}  ref={this.FormRefs2} />
-                </Modal>
+                </Modal>     
 
                 <Table rowKey="menuId" 
                 dataSource={list} 

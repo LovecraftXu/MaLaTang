@@ -2,20 +2,35 @@ html,body,#root,.App {
   height: 100%;
   display: flex;
   flex-direction: column;
+  /* overflow-x: hidden;
+  overflow-y: scroll; */
 }
 
 .App > .header {
-  text-align: center;
+  display: flex;
+  /* text-align: center; */
   height: 80px;
   line-height: 80px;
-  background-color: #000C17;
+  background-color: #00284D;
   font-size: 18px;
   font-weight: bold;
+  justify-content: space-between;
+  /* padding: 0 2em 0 35em; */
   padding: 0 2em;
-  border-radius: 5px;
+  /* border-radius: 5px; */
+  align-items: center;
 }
 
 .header h2 {
+  color: white;
+}
+
+.header Button {
+  /* border: 1px solid red; */
+  font-size: 1em;
+}
+
+.header span {
   color: white;
 }
 
@@ -23,17 +38,68 @@ html,body,#root,.App {
   flex: 1;
   display: flex;
   flex-direction: row;
-}
-
-.content .nav {
-  background-color: #000C17;
-  border-radius: 5px;
+  width: 100%;
+  height: 100%;
   overflow: hidden;
 }
 
+.content .nav {
+ 
+  
+  /* overflow: scroll; */
+}
+
+/* .back_img{
+  flex: 1;
+  overflow-y: hidden;
+} */
+
+/* .content_back{
+  height: 100%;
+  width: 100%;
+  background-image: url("./img/bg5.jpg");
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  filter: blur(15px);
+  opacity: 0.1;
+	z-index: -2;
+} */
+
+/* .content .content_right {
+  position: absolute;
+  top: 80px;
+  left: 220px;
+  height: 70%;
+  width: 85%;
+  padding: 1em;
+  z-index: 1;
+} */
+
 .content .content_right {
   flex: 1;
-  padding: 1em;
-  overflow-y: hidden;
-  color: blue;
+  padding: 1rem;
+
+  background: linear-gradient(#008F6C, #1B18AF); 
+  /* background: linear-gradient(#0787A2, #601C9B);   */
+  
+}
+
+.content .content_right .container{
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+  /* border: 1px solid #000; */
+  width: 70%;
+  margin: 0 auto;
+  padding: 2rem;
+  /* border-radius: 4px; */
+  box-shadow: -10px 10px 20px rgba(0, 0, 0, 0.75);
+
+  background: linear-gradient(#02CB9F, #2623FA);  
+  /* background: linear-gradient(#0AB0D5, #9E2CFD);   */
+}
+
+.login {
+  width: 100%;
+  height: 100%;
 }

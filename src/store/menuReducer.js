@@ -1,3 +1,10 @@
+/*
+ * @Description: In User Settings Edit
+ * @Author: your name
+ * @Date: 2019-05-30 19:54:04
+ * @LastEditTime: 2019-09-02 13:30:39
+ * @LastEditors: Please set LastEditors
+ */
 import axios from '../http/index';
 import { message } from 'antd';
 
@@ -9,7 +16,8 @@ let initState = {
 	visible:false,
     loading:false,
     visible2:false,
-    obj2:{}
+    obj2:{},
+    title: null
 }
 //启动加载
 export function beginLoading(){
@@ -48,11 +56,12 @@ export function clearModal2(){
 //重载信息
 export function reloadMenu(){
     return function(dispatch){
-        dispatch(beginLoading);
+        dispatch(beginLoading());
         axios.get("/menu/findAll").then((result)=>{
-            dispatch({type:"RELOAD_MENU", payload:result.data})         
+            dispatch({type:"RELOAD_MENU", payload:result.data});
+            dispatch(endLoading());
+                  
         })
-        dispatch(endLoading);
     }  
 }
 //根据id删除单行信息
@@ -142,7 +151,8 @@ function menuReducer(state=initState,action){
         case "SHOW_MODAL":
             return {
                 ...state,
-                visible:true
+                visible:true,
+                title:'添加'
             }; 
         case "CLOSE_MODAL":
             return {
@@ -152,7 +162,8 @@ function menuReducer(state=initState,action){
         case "EDIT_DATA":
             return {
                 ...state,
-                obj:action.payload
+                obj:action.payload,
+                title: '修改'
             }; 
         case "GET_IDS":
             return {

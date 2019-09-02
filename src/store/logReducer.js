@@ -1,3 +1,10 @@
+/*
+ * @Description: In User Settings Edit
+ * @Author: your name
+ * @Date: 2019-05-30 16:19:00
+ * @LastEditTime: 2019-09-02 13:41:21
+ * @LastEditors: Please set LastEditors
+ */
 import axios from '../http/index';
 import { message } from 'antd';
 
@@ -18,11 +25,12 @@ export function endLoading(){
 //重载信息
 export function reloadLog(){
     return function(dispatch){
-        dispatch(beginLoading);
+        dispatch(beginLoading());
         axios.get("/log/findAll").then((result)=>{
-            dispatch({type:"RELOAD_LOG", payload:result.data})         
+            dispatch({type:"RELOAD_LOG", payload:result.data});
+            dispatch(endLoading());
+
         })
-        dispatch(endLoading);
     }  
 }
 //根据id删除单行信息

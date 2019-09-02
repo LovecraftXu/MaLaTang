@@ -1,3 +1,10 @@
+/*
+ * @Description: In User Settings Edit
+ * @Author: your name
+ * @Date: 2019-05-29 14:50:49
+ * @LastEditTime: 2019-09-02 13:47:40
+ * @LastEditors: Please set LastEditors
+ */
 import React from 'react';
 
 import { Button, Table, Divider, Icon, Modal, } from 'antd';
@@ -102,7 +109,7 @@ class Role extends React.Component {
     }
 
     render(){
-        let { ids, obj, list, visible, loading } = this.props.roleState;
+        let { ids, obj, list, visible, loading, title } = this.props.roleState;
         let { Column } = Table;
         var rowSelection = {
             onChange: (selectedRowKeys, selectedRows) => {
@@ -124,13 +131,13 @@ class Role extends React.Component {
             <div className="role">
                 <h2>角色管理</h2>
                 <div className="btns">
-                    <Button type="primary" className="btn" onClick={this.toAdd.bind(this)}>添加</Button>
-                    <Button type="danger" className="btn" onClick = {this.batchDeleteByIds.bind(this,ids)}>批量下架</Button>
+                    <Button type="primary" className="btn" onClick={this.toAdd.bind(this)}>添加角色</Button>
+                    <Button type="danger" className="btn" onClick = {this.batchDeleteByIds.bind(this,ids)}>批量删除</Button>
                 </div>
                 
                {/* 模态框 */}
                <Modal
-                    title="添加"
+                    title={title}
                     visible={visible}
                     onOk={this.handleOk}
                     onCancel={this.handleCancel}
@@ -155,8 +162,8 @@ class Role extends React.Component {
                         <Icon type="delete" onClick={this.toDelete.bind(this,record.sysRoleId)}></Icon>
                         <Divider type="vertical" />
                         <Icon type="edit"  onClick = {this.toEdit.bind(this,record)}></Icon>
-                        <Divider type="vertical" />
-                        <Icon type="eye" onClick={this.toDetails.bind(this,record)}></Icon>
+                        {/* <Divider type="vertical" />
+                        <Icon type="eye" onClick={this.toDetails.bind(this,record)}></Icon> */}
                         </span>
                     )}
                     />

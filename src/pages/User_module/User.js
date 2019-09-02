@@ -1,6 +1,13 @@
+/*
+ * @Description: In User Settings Edit
+ * @Author: your name
+ * @Date: 2019-05-28 22:54:06
+ * @LastEditTime: 2019-09-02 13:44:35
+ * @LastEditors: Please set LastEditors
+ */
 import React from 'react';
 
-import { Button, Table, Divider, Icon, Modal, } from 'antd';
+import { Button, Table, Divider, Icon, Modal } from 'antd';
 import { connect } from 'react-redux';
 
 import UserForm from './UserForm';
@@ -102,7 +109,7 @@ class User extends React.Component {
     }
 
     render(){
-        let { ids, obj, list, visible, loading } = this.props.userState;
+        let { ids, obj, list, visible, loading, title } = this.props.userState;
         let { Column } = Table;
         var rowSelection = {
             onChange: (selectedRowKeys, selectedRows) => {
@@ -124,13 +131,13 @@ class User extends React.Component {
             <div className="user">
                 <h2>用户管理</h2>
                 <div className="btns">
-                    <Button type="primary" className="btn" onClick={this.toAdd.bind(this)}>添加</Button>
-                    <Button type="danger" className="btn" onClick = {this.batchDeleteByIds.bind(this,ids)}>批量下架</Button>
+                    <Button type="primary" className="btn" onClick={this.toAdd.bind(this)}>添加用户</Button>
+                    <Button type="danger" className="btn" onClick = {this.batchDeleteByIds.bind(this,ids)}>批量删除</Button>
                 </div>
                 
                {/* 模态框 */}
                <Modal
-                    title="添加"
+                    title={title}
                     visible={visible}
                     onOk={this.handleOk}
                     onCancel={this.handleCancel}

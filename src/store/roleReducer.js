@@ -1,3 +1,10 @@
+/*
+ * @Description: In User Settings Edit
+ * @Author: your name
+ * @Date: 2019-05-29 14:24:23
+ * @LastEditTime: 2019-09-02 13:47:39
+ * @LastEditors: Please set LastEditors
+ */
 import axios from '../http/index';
 import { message } from 'antd';
 
@@ -34,11 +41,12 @@ export function clearModal(){
 //重载角色信息
 export function reloadRole(){
     return function(dispatch){
-        dispatch(beginLoading);
+        dispatch(beginLoading());
         axios.get("/role/findAll").then((result)=>{
-            dispatch({type:"RELOAD_ROLE", payload:result.data})         
+            dispatch({type:"RELOAD_ROLE", payload:result.data});
+            dispatch(endLoading());
+
         })
-        dispatch(endLoading);
     }  
 }
 //根据id删除单行信息
@@ -109,7 +117,8 @@ function roleReducer(state=initState,action){
         case "SHOW_MODAL":
             return {
                 ...state,
-                visible:true
+                visible:true,
+                title:'添加'
             }; 
         case "CLOSE_MODAL":
             return {
@@ -119,7 +128,8 @@ function roleReducer(state=initState,action){
         case "EDIT_DATA":
             return {
                 ...state,
-                obj:action.payload
+                obj:action.payload,
+                title: '修改'
             }; 
         case "GET_IDS":
             return {

@@ -61,7 +61,7 @@ class CustomerForm extends React.Component {
                 <Option  value="新顾客">新顾客</Option>             
              </Select> )}
         </Form.Item>
-        <Form.Item label="满意度">
+        {/* <Form.Item label="满意度">
           {getFieldDecorator('custSatisfy', {
             rules: [{ required: true, message: 'Please select your Satisfy!' }],
           })( <Select placeholder="Select a option and change input text above" >
@@ -71,7 +71,7 @@ class CustomerForm extends React.Component {
                 <Option  value="2">☆☆</Option>             
                 <Option  value="1">☆</Option>             
              </Select> )}
-        </Form.Item>
+        </Form.Item> */}
         
         <Form.Item label="头像">
           <Upload {...props}>

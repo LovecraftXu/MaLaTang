@@ -1,6 +1,13 @@
+/*
+ * @Description: In User Settings Edit
+ * @Author: your name
+ * @Date: 2019-05-30 16:29:50
+ * @LastEditTime: 2019-09-02 12:48:14
+ * @LastEditors: Please set LastEditors
+ */
 import React from 'react';
 
-import { Button, Table, Divider, Icon, Modal, } from 'antd';
+import { Button, Table, Icon, Modal, } from 'antd';
 import { connect } from 'react-redux';
 
 import { 
@@ -88,15 +95,14 @@ class Log extends React.Component {
         //分页配置
         let pagination = {
             position:'bottom',
-            pageSize:5,
-            
+            pageSize:10,
         }
         // console.log(ids);
         return (
             <div className="log">
                 <h2>日志管理</h2>
                 <div className="btns">
-                    <Button type="danger" className="btn" onClick = {this.batchDeleteByIds.bind(this,ids)}>批量下架</Button>
+                    <Button type="danger" className="btn" onClick = {this.batchDeleteByIds.bind(this,ids)}>批量删除</Button>
                 </div>
 
                 <Table rowKey="logId" 
@@ -120,8 +126,8 @@ class Log extends React.Component {
                     render={(text, record) => (
                         <span>
                         <Icon type="delete" onClick={this.toDelete.bind(this,record.logId)}></Icon>
-                        <Divider type="vertical" />
-                        <Icon type="eye" onClick={this.toDetails.bind(this,record)}></Icon>
+                        {/* <Divider type="vertical" />
+                        <Icon type="eye" onClick={this.toDetails.bind(this,record)}></Icon> */}
                         </span>
                     )}
                     />

@@ -1,3 +1,10 @@
+/*
+ * @Description: In User Settings Edit
+ * @Author: your name
+ * @Date: 2019-05-31 17:05:53
+ * @LastEditTime: 2019-09-02 13:39:01
+ * @LastEditors: Please set LastEditors
+ */
 import React from 'react';
 import { Button, Table, Divider, Icon, Modal, } from 'antd';
 import { connect } from 'react-redux';
@@ -112,10 +119,11 @@ class Order extends React.Component {
         let m = date.getMinutes() + ':';
         let s = date.getSeconds();
          return Y+M+D+h+m+s;
-        }
+    }
 
     render(){
-        let { ids, obj, list, visible, loading } = this.props.orderState;
+        // this.props.dispatch(reloadOrder());
+        let { ids, obj, list, visible, loading, title } = this.props.orderState;
         let { Column } = Table;
         var rowSelection = {
             onChange: (selectedRowKeys, selectedRows) => {
@@ -126,24 +134,37 @@ class Order extends React.Component {
                 name: record.name,
               }),
           };
+        //   parseInt(number)==number
         //分页配置
+        // console.log("订单数量",list.length);
+        // var pageCurrent = 0;
+        // var page = list.length % 10;
+        // if(parseInt(page) == page){
+        //     pageCurrent = list.length/10;
+        //     console.log(1)
+        // } else {
+        //     pageCurrent = list.length/10+1;
+        //     console.log(12,pageCurrent)
+        // }
+        // console.log("默认订单页",parseInt(pageCurrent));
+        // pageCurrent = parseInt(pageCurrent);
         let pagination = {
             position:'bottom',
-            pageSize:5,
-            
+            pageSize:10,
+            defaultCurrent:6,
         }
         // console.log(ids);
         return (
             <div className="order">
-                <h2>用户管理</h2>
+                <h2>订单管理</h2>
                 <div className="btns">
-                    <Button type="primary" className="btn" onClick={this.toAdd.bind(this)}>添加</Button>
-                    <Button type="danger" className="btn" onClick = {this.batchDeleteByIds.bind(this,ids)}>批量下架</Button>
+                    <Button type="primary" className="btn" onClick={this.toAdd.bind(this)}>添加订单</Button>
+                    <Button type="danger" className="btn" onClick = {this.batchDeleteByIds.bind(this,ids)}>批量删除</Button>
                 </div>
                 
                {/* 模态框 */}
                <Modal
-                    title="添加"
+                    title={title}
                     visible={visible}
                     onOk={this.handleOk}
                     onCancel={this.handleCancel}
@@ -175,7 +196,7 @@ class Order extends React.Component {
                         {record.customer.custRealname}
                         </span>
                     )} />
-                    <Column align="center" title="订单名" dataIndex="orderName" key="orderName" />
+                    {/* <Column align="center" title="订单名" dataIndex="orderName" key="orderName" /> */}
 
                     
                     <Column align="center"

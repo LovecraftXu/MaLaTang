@@ -1,3 +1,10 @@
+/*
+ * @Description: In User Settings Edit
+ * @Author: your name
+ * @Date: 2019-05-30 17:18:31
+ * @LastEditTime: 2019-09-02 13:22:27
+ * @LastEditors: Please set LastEditors
+ */
 import axios from '../http/index';
 import { message } from 'antd';
 
@@ -8,6 +15,7 @@ let initState = {
     obj:{},
 	visible:false,
     loading:false,
+    title: null
 }
 //启动加载
 export function beginLoading(){
@@ -33,12 +41,13 @@ export function clearModal(){
 //重载信息
 export function reloadCustomer(){
     return function(dispatch){
-        dispatch(beginLoading);
+        dispatch(beginLoading());
         axios.get("/customer/findAll").then((result)=>{
             console.log(result)
-            dispatch({type:"RELOAD_CUSTOMER", payload:result.data})         
+            dispatch({type:"RELOAD_CUSTOMER", payload:result.data})
+            dispatch(endLoading());         
         })
-        dispatch(endLoading);
+        
     }  
 }
 //根据id删除单行信息
@@ -90,8 +99,6 @@ export function deleteByIds(ids){
 }
 
 
-
-
 function customerReducer(state=initState,action){
 	switch(action.type){
 		case "RELOAD_CUSTOMER":
@@ -112,7 +119,8 @@ function customerReducer(state=initState,action){
         case "SHOW_MODAL":
             return {
                 ...state,
-                visible:true
+                visible:true,
+                title:'添加'
             }; 
         case "CLOSE_MODAL":
             return {
@@ -122,7 +130,8 @@ function customerReducer(state=initState,action){
         case "EDIT_DATA":
             return {
                 ...state,
-                obj:action.payload
+                obj:action.payload,
+                title: '修改'
             }; 
         case "GET_IDS":
             return {
