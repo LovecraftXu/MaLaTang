@@ -2,7 +2,7 @@
  * @Description: In User Settings Edit
  * @Author: your name
  * @Date: 2019-05-30 17:00:38
- * @LastEditTime: 2019-09-02 13:21:55
+ * @LastEditTime: 2019-09-02 20:09:04
  * @LastEditors: Please set LastEditors
  */
 import React from 'react';
@@ -130,7 +130,7 @@ class Customer extends React.Component {
             position:'bottom',
             pageSize:5,
         }
-        // console.log(ids);
+        console.log('安委会',this.props);
         return (
             <div className="customer">
                 <h2>顾客管理</h2>

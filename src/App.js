@@ -2,7 +2,7 @@
  * @Description: In User Settings Edit
  * @Author: your name
  * @Date: 2019-05-28 20:10:18
- * @LastEditTime: 2019-09-02 12:25:42
+ * @LastEditTime: 2019-09-02 21:33:13
  * @LastEditors: Please set LastEditors
  */
 import React from 'react';
@@ -29,15 +29,17 @@ import Order from './pages/Order_module/Order';
 import OrderDetails from './pages/Order_module/OrderDetails';
 import Shopcart from './pages/Shopcart_module/Shopcart';
 import ShopcartDetails from './pages/Shopcart_module/ShopcartDetails';
+import Login from './Login';
 
 function exit(){
   window.localStorage.removeItem("userId");
-  window.location.href = "/";
-  console.log("销毁id")
+  window.location.href = "/mlt";
+  // console.log("销毁id", this.props )
 }
 
 function App() {
   let userName = window.localStorage.getItem("userName");
+  console.log("销毁id", this )
   return (
     <div className="App">
       <header className="header">
@@ -69,6 +71,8 @@ function App() {
                 <Route path='/orderDetails' component={OrderDetails} />
                 <Route path='/shopcart' component={Shopcart} />
                 <Route path='/shopcartDetails' component={ShopcartDetails} />
+                <Route path='/login' component={Login} />
+
               </Switch>
               </div>
           </div>

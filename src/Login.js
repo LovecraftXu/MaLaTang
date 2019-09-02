@@ -2,11 +2,12 @@
  * @Description: In User Settings Edit
  * @Author: your name
  * @Date: 2019-06-09 14:36:15
- * @LastEditTime: 2019-08-17 17:25:28
+ * @LastEditTime: 2019-09-02 21:33:14
  * @LastEditors: Please set LastEditors
  */
 import React from 'react';
 import { Form, Icon, Input, Button, message } from 'antd';
+import { connect } from 'react-redux';
 
 import './Login.css';
 import axios from './http';
@@ -14,6 +15,7 @@ import axios from './http';
 class Login extends React.Component {
 
     handleSubmit = e => {
+        console.log("手机",this.props);  
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
           if (!err) {
@@ -28,7 +30,8 @@ class Login extends React.Component {
                         window.localStorage.setItem("userName",result.data.userUsername);
                         window.localStorage.setItem("roleId",result.data.userRoleId);
                         console.log("id已存在storage");
-                        window.location.href = '/';  
+                        window.location.href = '/mlt';
+
                     } else {
                         message.success(result.statusText);
                     }
@@ -79,8 +82,8 @@ class Login extends React.Component {
                     </Button> */}
                     </Form.Item>
 
-                    <div class="copyright-container">
-                        <span class="copyright">
+                    <div className="copyright-container">
+                        <span className="copyright">
                             &copy;王豆豆毕设
                         </span>
                     </div>
@@ -91,4 +94,4 @@ class Login extends React.Component {
     }
 }
 
-export default Form.create()(Login);
+export default connect(state=>state)(Form.create()(Login));
